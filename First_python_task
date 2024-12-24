@@ -1,0 +1,18 @@
+def sum_numbers(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+
+def print_even_numbers():
+    for number in range(1, 21):
+        if number % 2 == 0:
+            print(number, end=" ")
+    print()
+
+def find_largest(numbers):
+    largest = numbers[0]
+    for number in numbers:
+        if number > largest:
+            largest = number
+    return largest
