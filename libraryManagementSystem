@@ -1,0 +1,52 @@
+import json
+
+class Book:
+    def __init__(self, title, author, isbn):
+        self.title = title
+        self.author = author
+        self.isbn = isbn
+
+class Member:
+    def __init__(self, name, member_id):
+        self.name = name
+        self.member_id = member_id
+
+class Library:
+    def __init__(self, file_path="library_data.json"):
+        self.file_path = file_path
+        self.load_data()
+
+    def load_data(self):
+        try:
+            with open(self.file_path, 'r') as file:
+                self.data = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            self.data = {"books": [], "members": []}
+
+    def save_data(self):
+        with open(self.file_path, 'w') as file:
+            json.dump(self.data, file, indent=4)
+
+    def add_book(self, book):
+        self.data["books"].append(book.__dict__)
+        self.save_data()
+
+    def add_member(self, member):
+        self.data["members"].append(member.__dict__)
+        self.save_data()
+
+    def get_books(self):
+        return self.data["books"]
+
+    def get_members(self):
+        return self.data["members"]
+
+# Usage
+library = Library()
+book1 = Book("1984", "Bobby Charlton", "123456789")
+library.add_book(book1)
+member1 = Member("Nati Tem", "N001")
+library.add_member(member1)
+
+print("Books:", library.get_books())
+print("Members:", library.get_members())
