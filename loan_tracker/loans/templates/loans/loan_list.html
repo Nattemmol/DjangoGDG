@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Loan Tracker</h2>
+<form method="get">
+    <input type="text" name="search" placeholder="search by name">
+    <button type="submit">Search</button>
+</form>
+    <h3>Total Outstanding: {{ total_outstanding }}</h3>
+    <ul>
+        {% for loan in loans %}
+        <li>{{ loan.name }} - {{ loan.amount }}
+            <a href="{% url 'loan_edit' loan.id %}">Edit</a>
+            <form action="{% url 'loan_delete' loan.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'loan_new' %}">Add Loan</a>
+{% endblock %}

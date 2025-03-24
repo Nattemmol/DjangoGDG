@@ -1,0 +1,19 @@
+{% load static %}  <!-- Ensure this is at the top -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Loan Tracker</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Loan Tracker</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
