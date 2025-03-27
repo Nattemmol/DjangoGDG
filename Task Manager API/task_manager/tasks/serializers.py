@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 from .models import Task, CustomUser
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +17,7 @@ class TaskSerializer(serializers.ModelSerializer):
         read_only_fields = ['owner']
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = "email"
     email = serializers.EmailField()
 
     def validate(self, attrs):
@@ -29,4 +32,4 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         if not user:
             raise serializers.ValidationError("Invalid email or password.")
 
-        return super().validate({"username": user.email, "password": password})
+        return super().validate(attrs)
